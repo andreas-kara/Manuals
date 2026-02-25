@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>molitor 4K Light Player – User Manual V2.9</title>
+  <style>
+    :root {
+      --red: #c0392b;
+      --red-dark: #922b21;
+      --red-light: #fdecea;
+      --bg: #ffffff;
+      --bg-alt: #f8f8f8;
+      --border: #e0e0e0;
+      --text: #1a1a1a;
+      --text-muted: #666;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--red);
+      color: white;
+      padding: 18px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .site-header h1 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+    .site-header .sub {
+      font-size: 12px;
+      opacity: .82;
+      margin-top: 2px;
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      display: flex;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* ── TOC Sidebar ── */
+    .toc {
+      width: 240px;
+      min-width: 240px;
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 57px;
+      height: calc(100vh - 57px);
+      overflow-y: auto;
+      padding: 20px 12px 40px;
+      background: #fafafa;
+    }
+    .toc-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #999;
+      padding: 0 6px 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .toc ul { list-style: none; }
+    .toc ul li a {
+      display: block;
+      padding: 4px 8px;
+      font-size: 12.5px;
+      color: #444;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background .12s, color .12s;
+    }
+    .toc ul li a:hover { background: #efefef; color: var(--red); }
+    .toc ul ul { padding-left: 12px; display: none; }
+    .toc ul ul ul { padding-left: 12px; display: none; }
+    .toc li.open > ul { display: block; }
+    .toc ul ul li a { font-size: 12px; color: #666; padding: 3px 8px; }
+    .toc ul ul ul li a { font-size: 11.5px; color: #888; padding: 2px 8px; }
+    .toc li.active > a { color: var(--red); font-weight: 600; background: var(--red-light); }
+
+    /* accordion toggle arrow */
+    .toc-row { display: flex; align-items: center; }
+    .toc-row > a { flex: 1; }
+    .toc-btn {
+      background: none; border: none; cursor: pointer;
+      color: #aaa; font-size: 10px; padding: 2px 5px;
+      line-height: 1; border-radius: 3px;
+      transition: transform .2s, color .12s;
+      flex-shrink: 0;
+    }
+    .toc-btn:hover { color: var(--red); }
+    .toc li.open > .toc-row > .toc-btn { transform: rotate(90deg); color: var(--red); }
+
+    /* ── Content ── */
+    .content {
+      flex: 1;
+      padding: 40px 52px 80px;
+      max-width: 860px;
+      min-width: 0;
+    }
+
+    /* ── Typography ── */
+    .content > h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+    .content > .doc-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #111;
+      margin: 48px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--red);
+      scroll-margin-top: 70px;
+    }
+    h2 .num { color: var(--red); margin-right: 6px; }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #222;
+      margin: 30px 0 10px;
+      padding-left: 10px;
+      border-left: 3px solid var(--red);
+      scroll-margin-top: 70px;
+    }
+
+    h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin: 22px 0 8px;
+      scroll-margin-top: 70px;
+    }
+
+    h5 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #444;
+      margin: 16px 0 6px;
+    }
+
+    p { margin: 0 0 12px; }
+
+    ul, ol { margin: 0 0 12px 24px; }
+    li { margin: 5px 0; }
+    li > ul, li > ol { margin-top: 5px; margin-bottom: 5px; }
+
+    a { color: var(--red); }
+    a:hover { text-decoration: underline; }
+
+    strong { font-weight: 600; }
+
+    /* ── Code ── */
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px 20px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 10px 0 16px;
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+    code {
+      background: #f2f2f2;
+      color: #c0392b;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+    }
+    pre code { color: #d4d4d4; background: none; }
+
+    /* ── Notice boxes ── */
+    .notice {
+      padding: 11px 14px;
+      border-radius: 5px;
+      margin: 10px 0 16px;
+      border-left: 4px solid;
+      font-size: 14px;
+    }
+    .notice .label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      display: block;
+      margin-bottom: 3px;
+    }
+    .notice-important { background: #fdecea; border-color: var(--red); }
+    .notice-important .label { color: var(--red); }
+    .notice-warning { background: #fff8e1; border-color: #f59e0b; }
+    .notice-warning .label { color: #92600a; }
+    .notice-info { background: #e8f4f8; border-color: #2196f3; }
+    .notice-info .label { color: #1565c0; }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 20px;
+      font-size: 14px;
+    }
+    thead tr { background: var(--red); color: white; }
+    th { padding: 9px 14px; text-align: left; font-weight: 600; }
+    td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tbody tr:nth-child(even) { background: #fafafa; }
+    tbody tr:hover { background: var(--red-light); }
+    td code { font-size: 12.5px; }
+
+    /* ── Keyboard ── */
+    kbd {
+      display: inline-block;
+      padding: 1px 7px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-bottom: 2px solid #bbb;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    /* ── Horizontal rule ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: #2c2c2c;
+      color: #999;
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+    }
+    .site-footer a { color: #bbb; }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .toc { display: none; }
+      .content { padding: 24px 20px 60px; }
+    }
+
+    @media print {
+      .toc, .site-header { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>molitor 4K Light Player</h1>
+  <div class="sub">User Manual V2.9 · Firmware 390</div>
+</header>
+
+<div class="wrapper">
+
+  <!-- ── TOC ── -->
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-title">Contents</div>
+    <ul>
+      <li><a href="#s1">1. Technical Data</a></li>
+      <li><a href="#s2">2. Hardware Overview</a></li>
+      <li><a href="#s3">3. Getting Started</a></li>
+      <li>
+        <div class="toc-row"><a href="#s4">4. Configuration</a><button class="toc-btn" aria-label="expand">›</button></div>
+        <ul>
+          <li><a href="#s4-remote">Remote Control</a></li>
+          <li>
+            <div class="toc-row"><a href="#s4-web">Web Interface</a><button class="toc-btn" aria-label="expand">›</button></div>
+            <ul>
+              <li><a href="#s4-video">Video &amp; Audio</a></li>
+              <li><a href="#s4-network">Network</a></li>
+              <li><a href="#s4-sync">Synchronization</a></li>
+              <li><a href="#s4-misc">Various Settings</a></li>
+              <li><a href="#s4-ftp">Time &amp; FTP</a></li>
+              <li><a href="#s4-sd">SD / USB</a></li>
+              <li><a href="#s4-admin">Administration</a></li>
+            </ul>
+          </li>
+          <li><a href="#s4-osd">Alternative OSD Menu</a></li>
+          <li><a href="#s4-cfpsetup">CFPSetup.txt</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="toc-row"><a href="#s5">5. Play Files</a><button class="toc-btn" aria-label="expand">›</button></div>
+        <ul>
+          <li><a href="#s5-nopl">Without Playlist</a></li>
+          <li><a href="#s5-playlist">PLAYLIST.txt</a></li>
+          <li><a href="#s5-cal">Calendar Playlist</a></li>
+          <li><a href="#s5-html5">HTML5 Browser</a></li>
+          <li><a href="#s5-jsinject">JS Inject</a></li>
+        </ul>
+      </li>
+      <li><a href="#s6">6. Timecode (.sze)</a></li>
+      <li><a href="#s7">7. Synchronization</a></li>
+      <li>
+        <div class="toc-row"><a href="#s8">8. External Control</a><button class="toc-btn" aria-label="expand">›</button></div>
+        <ul>
+          <li><a href="#s8-udp">UDP Commands</a></li>
+          <li><a href="#s8-touch">Touchscreen</a></li>
+          <li><a href="#s8-ioboard">USB IOBoard</a></li>
+          <li><a href="#s8-usb">USB Devices</a></li>
+        </ul>
+      </li>
+      <li><a href="#s9">9. Content Update</a></li>
+      <li><a href="#s10">10. DMX / ArtNet</a></li>
+      <li><a href="#s11">11. Appendix</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Main Content ── -->
+  <main class="content">
+
+    <h1>molitor 4K Light Player</h1>
+    <p class="doc-meta">User Manual · Manual Version V2.9 · Firmware Version 390 · February 2026</p>
+
+    <!-- ════════════════════ 1. TECHNICAL DATA ════════════════════ -->
+    <h2 id="s1"><span class="num">1.</span> Technical Data</h2>
+
+    <h3>Supported File Formats</h3>
+
+    <table>
+      <thead><tr><th>Category</th><th>Formats</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>VIDEO</strong></td>
+          <td>MP4, MOV, AVI, MKV, …</td>
+          <td>Up to UltraHD / 4K when purchasing the optional 4K decoder license</td>
+        </tr>
+        <tr>
+          <td><strong>PICTURES</strong></td>
+          <td>JPG, PNG, BMP</td>
+          <td>Max. native resolution 1920×1080. Use UltraHD Converter for 4K images.</td>
+        </tr>
+        <tr>
+          <td><strong>AUDIO</strong></td>
+          <td>MP3, WAV, AAC</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Data Storage</h3>
+    <p>MicroSD card and USB storage are supported. File systems: <strong>FAT32, NTFS, exFAT</strong>.</p>
+
+    <h3>Connections &amp; Outputs</h3>
+    <table>
+      <thead><tr><th>Connection</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Video output</strong></td><td>HDMI 2.0 — up to 4K (auto detection or manual); AV out 3.5 mm 4-pin jack (CVBS + stereo audio)</td></tr>
+        <tr><td><strong>Audio output</strong></td><td>HDMI digital; S/PDIF optical (TOSLINK); 3.5 mm AV jack (analogue stereo)</td></tr>
+        <tr><td><strong>Network</strong></td><td>Gigabit Ethernet LAN (DHCP or static IP); WiFi (WPA2 / WEP / Open)</td></tr>
+        <tr><td><strong>USB</strong></td><td>USB 3.0 and USB 2.0 — mouse, keyboard, touchscreen, IO board, presenter, RFID, etc.</td></tr>
+        <tr><td><strong>Wireless</strong></td><td>WLAN antenna connector (10 cm antenna included)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Details</h3>
+    <table>
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Dimensions</td><td>109 mm × 109 mm × 18 mm</td></tr>
+        <tr><td>Power supply</td><td>5 V DC (adapter included)</td></tr>
+        <tr><td>Typical use</td><td>24/7 continuous operation</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Scope of Delivery</h3>
+    <ul>
+      <li>molitor 4K Light player device</li>
+      <li>5 V power adapter</li>
+      <li>Remote control</li>
+      <li>10 cm WLAN antenna</li>
+      <li>MicroSD card</li>
+    </ul>
+
+
+    <!-- ════════════════════ 2. HARDWARE OVERVIEW ════════════════════ -->
+    <h2 id="s2"><span class="num">2.</span> Hardware Overview</h2>
+
+    <h3>Front</h3>
+    <ol>
+      <li><strong>Power LED</strong> — Orange while booting → red during startup → green when ready to play</li>
+      <li><strong>Time display</strong></li>
+      <li><strong>Status symbols</strong> — Network, USB device, playback status</li>
+    </ol>
+
+    <h3>Back</h3>
+    <p>Connectors from left to right:</p>
+    <ol>
+      <li><strong>WLAN antenna connection</strong> — Screw on the included 10 cm antenna for improved WiFi reception</li>
+      <li><strong>AV output — 3.5 mm 4-pin jack</strong>
+        <ul>
+          <li>Pin 1: GND (Mass)</li>
+          <li>Pin 2: CVBS (composite video)</li>
+          <li>Pin 3: Audio Right</li>
+          <li>Pin 4: Audio Left</li>
+        </ul>
+      </li>
+      <li><strong>Gigabit LAN port</strong> — Integrate into an existing network via DHCP or a static IP address</li>
+      <li><strong>HDMI 2.0 output</strong> — Main video output, up to 4K</li>
+      <li><strong>S/PDIF optical output</strong> — Digital audio via TOSLINK cable</li>
+      <li><strong>Power supply connector</strong> — Connect the included 5 V adapter here</li>
+    </ol>
+
+    <h3>Right Side</h3>
+    <p>Connectors from left to right:</p>
+    <ol>
+      <li><strong>USB 3.0</strong> — External devices: mouse, keyboard, presenter, touchscreen, etc.</li>
+      <li><strong>USB 2.0</strong> — External devices: mouse, keyboard, presenter, touchscreen, etc.</li>
+      <li><strong>MicroSD slot</strong> — Insert MicroSD card with playable files (FAT32, NTFS, exFAT)</li>
+    </ol>
+
+
+    <!-- ════════════════════ 3. GETTING STARTED ════════════════════ -->
+    <h2 id="s3"><span class="num">3.</span> Getting Started</h2>
+
+    <h3>Connect Outputs</h3>
+
+    <h4>Video</h4>
+    <p>Connect the player to your HDMI display using the HDMI Out port on the back. By default, the player
+    uses <strong>automatic HDMI detection</strong> — it selects the best resolution reported by the display. If the display
+    sends incorrect information, configure the resolution manually (see <a href="#s4-video">section 4.2.1.1</a>).</p>
+    <p>If no storage medium with playable files is inserted, the home page with version information is displayed.
+    Otherwise, playback begins directly from the MicroSD card or USB memory.</p>
+
+    <h4>Audio</h4>
+    <p>Three audio outputs are <strong>active in parallel</strong> — no additional settings needed:</p>
+    <ol>
+      <li>Digital audio via the HDMI output</li>
+      <li>Digital audio via the S/PDIF optical output</li>
+      <li>Analogue audio via the 4-pin AV Out jack</li>
+    </ol>
+
+    <h4>Network</h4>
+    <p>A network connection is required for:</p>
+    <ul>
+      <li>Displaying external HTML websites</li>
+      <li>UDP remote control</li>
+      <li>Automatic time synchronization via NTP server</li>
+    </ul>
+    <p>To set up the network:</p>
+    <ol>
+      <li>Connect a CAT5 Ethernet cable to the Gigabit LAN port on the back.</li>
+      <li>The player ships with <strong>DHCP enabled</strong>. If your network has a DHCP server, no further configuration is needed. The assigned IP address is shown in the setup menu.</li>
+    </ol>
+    <p>To set a <strong>static IP address</strong>, create or edit a <code>CFPSetup.txt</code> file:</p>
+    <pre><code>DHCP Off
+IP 192.168.0.2
+Subnet 255.255.255.0
+Gateway 192.168.0.1</code></pre>
+    <p>Save this file on the SD card or USB stick and insert it into the player. The settings are applied and saved internally.</p>
+
+    <h3>Starting the Player</h3>
+    <p>Connect the 5 V power adapter. The power LED changes from <strong>orange → red</strong> (boot screen), then to <strong>green</strong> when ready to play.</p>
+
+    <h3>Starting Playback</h3>
+    <p>Copy your media files to the <strong>root directory</strong> of the SD card or USB memory and insert it into the player
+    (hot-insert during operation is supported).</p>
+    <p>Playback starts in <strong>alphanumeric order</strong> (0–9, A–Z). Videos play once; images are displayed for 5 seconds.
+    After all files have played, it loops back to the first.</p>
+    <p><strong>Special cases:</strong></p>
+    <ul>
+      <li>Single video on card → loops seamlessly without black screen</li>
+      <li>Single image on card → displayed endlessly</li>
+    </ul>
+    <p>For custom order or interactive behavior, use a <a href="#s5-playlist">PLAYLIST.txt</a>.</p>
+
+
+    <!-- ════════════════════ 4. CONFIGURATION ════════════════════ -->
+    <h2 id="s4"><span class="num">4.</span> Configuring the molitor 4K Light Player</h2>
+    <p>Two ways to configure the player:</p>
+    <ol>
+      <li>Via the <strong>setup screen</strong> using the remote control, mouse/keyboard, or touchscreen</li>
+      <li>Via the <strong><code>CFPSetup.txt</code></strong> configuration file</li>
+    </ol>
+
+    <h3 id="s4-remote">The Remote Control</h3>
+    <p>Two remote control variants are supported. Variant 2 includes:</p>
+    <table>
+      <thead><tr><th>Button</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr><td>Setup button</td><td>Show / hide the setup menu</td></tr>
+        <tr><td>Mute</td><td>Toggle mute on/off</td></tr>
+        <tr><td>Arrow keys</td><td>Navigate menus; move mouse pointer (when pointer is enabled)</td></tr>
+        <tr><td>OK</td><td>Confirm / select</td></tr>
+        <tr><td>Mouse pointer</td><td>Toggle on-screen mouse pointer on/off</td></tr>
+        <tr><td>Volume +/–</td><td>Adjust volume</td></tr>
+        <tr><td>Back</td><td>Go back within the setup menu</td></tr>
+        <tr><td>Orientation</td><td>Switch between portrait and landscape</td></tr>
+        <tr><td>Number keys 0–9</td><td>Direct selection of ITEM by index</td></tr>
+        <tr><td>CH+ / CH–</td><td>Scroll within drop-down menus</td></tr>
+      </tbody>
+    </table>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      When operating with the remote control, use the <strong>CH+</strong> and <strong>CH–</strong> buttons to scroll within drop-down menus.
+    </div>
+
+    <h3 id="s4-web">Setup Menu / Web Interface</h3>
+    <p>Access the setup:</p>
+    <ul>
+      <li><strong>Without SD card / USB memory:</strong> the setup screen appears automatically on the display</li>
+      <li><strong>With keyboard connected:</strong> press <kbd>Ctrl+S</kbd> or <kbd>Ctrl+F5</kbd></li>
+      <li><strong>Via browser:</strong> enter the player's IP address in the address bar of any web browser</li>
+    </ul>
+    <p>All pages of the web interface include a navigation bar with links to:</p>
+    <ul>
+      <li>Main page (Audio, Video, Network, Sync, Peripherals)</li>
+      <li>Date &amp; time</li>
+      <li>Remote access (playback control)</li>
+      <li>SD card / USB stick (file browser, playlist editor)</li>
+      <li>Administration (reboot, reset)</li>
+    </ul>
+    <p>A status bar shows the current date/time and firmware version.</p>
+
+    <h4 id="s4-video">4.2.1.1 Video and Audio Setup</h4>
+    <ul>
+      <li>
+        <strong>HDMI Auto</strong>
+        <ul>
+          <li><strong>Off</strong> — Use the video settings you specify manually</li>
+          <li><strong>On</strong> — The player adopts the preferred resolution of the display (EDID). <em>This is the default.</em></li>
+        </ul>
+        <p>Some displays send incorrect resolution information. If the image quality is poor, disable this and set the resolution manually.</p>
+      </li>
+      <li>
+        <strong>Resolution</strong> — Resolutions supported by your display are shown in <em>white</em>; unsupported ones in <em>red</em>. Detection is not guaranteed and can be overridden.
+      </li>
+      <li>
+        <strong>Color space</strong>
+        <ul>
+          <li>RGB</li>
+          <li>YCbCr 4:4:4</li>
+          <li>YCbCr 4:2:2</li>
+          <li>YCbCr 4:2:0</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Color depth</strong>
+        <ul>
+          <li><strong>Auto</strong> — Some displays claim 10-bit support but do not support it. If no image appears, switch to 8 bit manually.</li>
+          <li><strong>8 bits</strong></li>
+          <li><strong>10 bits</strong> (HDR)</li>
+        </ul>
+      </li>
+      <li><strong>Volume</strong> — 0 (silent) to 15 (maximum)</li>
+    </ul>
+
+    <h4 id="s4-network">4.2.1.2 Network</h4>
+
+    <h5>LAN</h5>
+    <ul>
+      <li>
+        <strong>DHCP</strong>
+        <ul>
+          <li><strong>Off</strong> — Use the static network settings you specify</li>
+          <li><strong>On</strong> — Player takes the IP address assigned by the DHCP server and ignores static settings</li>
+        </ul>
+      </li>
+      <li><strong>IP address</strong></li>
+      <li><strong>Subnet mask</strong></li>
+      <li><strong>Gateway</strong></li>
+      <li><strong>DNS</strong></li>
+      <li><strong>UDP Port</strong> — Default: <code>4950</code>. Can be changed freely. <em>All synchronized players must use the same port.</em></li>
+    </ul>
+
+    <h5>WiFi</h5>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      WiFi <strong>only works</strong> when <strong>no LAN cable</strong> is connected!
+    </div>
+    <ul>
+      <li>
+        <strong>WiFi</strong>
+        <ul>
+          <li><strong>On</strong> — WLAN is activated</li>
+          <li><strong>Off</strong> — WLAN is deactivated</li>
+        </ul>
+      </li>
+      <li><strong>WLAN type</strong> — WPA2, WEP, or Open</li>
+      <li><strong>WLAN SSID</strong> — Network name. Use the <em>Scan</em> button to search for available networks.</li>
+      <li><strong>WLAN Key</strong> — Password (can be shown/hidden)</li>
+      <li><strong>DHCP, IP, Subnet, Gateway, DNS</strong> — Same as LAN settings above</li>
+      <li><strong>UDP Port</strong> — Default: <code>4950</code></li>
+    </ul>
+
+    <h4 id="s4-sync">4.2.1.3 Synchronization</h4>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      Players to be synchronized <strong>MUST</strong> be on the same network and use the same UDP port!
+    </div>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      When using a playlist, the <strong>ITEM numbers</strong> of master and slave players must match. When the master starts ITEM 5, ITEM 5 also starts on all slaves — regardless of file name.
+    </div>
+    <ul>
+      <li><strong>Activation</strong> — On / Off</li>
+      <li>
+        <strong>Type</strong>
+        <ul>
+          <li><strong>Master</strong> — Controls all slave players. Direct all external controls to the master only. <em>There can only be ONE master per sync group!</em></li>
+          <li><strong>Slave</strong> — Controlled by the master. Any number of slaves is supported.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Group</strong> — Assign a sync group (Group 1–10). Different groups do not affect each other.
+      </li>
+    </ul>
+
+    <h4 id="s4-misc">4.2.1.4 Various Settings</h4>
+    <ul>
+      <li>
+        <strong>Display time</strong> — Number of seconds an image or web page is shown. Default: 5 s. Can be set per item in the playlist.
+      </li>
+      <li>
+        <strong>USB type</strong> — Defines the type of peripheral connected to USB:
+        <ul>
+          <li><code>IOBoard</code> — USB button board</li>
+          <li><code>Relay</code> — USB relay board (Eckstein)</li>
+          <li><code>DMX</code> — ENTTEC USB DMX Pro Adapter</li>
+          <li><code>AirSensor</code> — Nexmosphere gesture sensors</li>
+          <li><code>RFID</code> — USB RFID reader</li>
+          <li><code>Keyboard</code> — USB keyboard</li>
+          <li><code>RS232</code> — USB serial adapter</li>
+          <li><code>WS2812</code> — WS2812 USB LED adapter</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Orientation</strong> — Landscape / Reverse Landscape / Portrait / Reverse Portrait
+        <br><em>Should only be changed in special cases. Contact SZe for assistance.</em>
+      </li>
+      <li>
+        <strong>Animation</strong> — Transition effect between images:
+        <ul>
+          <li><strong>Off</strong> — No animation</li>
+          <li><strong>Fade</strong> — Crossfade</li>
+          <li><strong>Slide</strong> — Slide in</li>
+          <li><strong>Rotation</strong> — Rotate in</li>
+        </ul>
+      </li>
+      <li><strong>Animation duration</strong> — Duration in milliseconds</li>
+    </ul>
+    <div class="notice notice-warning">
+      <span class="label">Attention</span>
+      If the animation duration overlaps with the display time, image errors may occur.
+    </div>
+    <ul>
+      <li><strong>Zoom</strong> — Enable / disable pinch-to-zoom on touchscreen for images</li>
+      <li><strong>Swipe</strong> — Enable / disable swipe gestures on touchscreen</li>
+      <li><strong>Longclick Timeout</strong> — Duration in ms until a long touch is detected</li>
+      <li><strong>DMX</strong> — On / Off</li>
+      <li><strong>ArtNet</strong> — On / Off</li>
+      <li>
+        <strong>Playback mode</strong> (without playlist):
+        <ul>
+          <li><strong>All files in loop</strong> — All files loop in alphanumeric order</li>
+          <li><strong>First file in loop</strong> — First file loops; after an external command, returns to the first file</li>
+          <li><strong>Selected file in loop</strong> — Currently selected file loops continuously</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4>4.2.1.5 Apply Settings or Save CFPSetup.txt</h4>
+    <p>At the bottom of the main page:</p>
+    <ul>
+      <li><strong>Apply Setup</strong> — Applies settings directly to the player. Available on display and in browser.</li>
+      <li><strong>Save CFPSetup.txt</strong> — Creates a setup file for download. <em>Only available in an external browser.</em></li>
+    </ul>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      If an SD card or USB memory is in the player, the existing <code>CFPSetup.txt</code> is renamed to <code>CFPSetupAlt.txt</code> and the new settings are saved as <code>CFPSetup.txt</code>.
+    </div>
+
+    <h4 id="s4-ftp">4.2.2 Time &amp; FTP Setup</h4>
+
+    <h5>4.2.2.1 Date and Time</h5>
+    <ul>
+      <li><strong>Date, Time, Time zone</strong></li>
+      <li>
+        <strong>Set time automatically</strong>
+        <ul>
+          <li><strong>Off</strong> — Time is set manually and continues running automatically</li>
+          <li><strong>On</strong> — Time is synchronized from the NTP server on every startup (requires network)</li>
+        </ul>
+      </li>
+      <li><strong>NTP time server</strong> — URL of the NTP server</li>
+    </ul>
+    <p><em>Note: The time zone is not permanently saved until you click "Apply Setup".</em></p>
+
+    <h5>4.2.2.2 FTP Access</h5>
+    <p>The player has a built-in FTP server for accessing the MicroSD card and USB memory.
+    Use an FTP client such as <a href="https://filezilla-project.org/" target="_blank">FileZilla</a>.</p>
+    <table>
+      <thead><tr><th>Storage</th><th>Username</th><th>Password</th></tr></thead>
+      <tbody>
+        <tr><td>MicroSD card</td><td><code>SZeSD</code></td><td><code>szegmbh</code></td></tr>
+        <tr><td>USB storage</td><td><code>SZeUSB</code></td><td><code>szegmbh</code></td></tr>
+      </tbody>
+    </table>
+    <p>FTP server port: <strong>2221</strong> (fixed, cannot be changed).</p>
+    <p>If the FTP server is not accessible, press the <strong>"FTP Server Restart"</strong> button.</p>
+
+    <h5>4.2.2.3 Automatic FTP Download</h5>
+    <p>Configure the player to automatically connect to an FTP server and download new content at a scheduled time.</p>
+    <ul>
+      <li><strong>Activation</strong> — Off / On</li>
+      <li><strong>FTP server address</strong> — IP address of the download server</li>
+      <li><strong>Username / Password</strong> — Login credentials</li>
+      <li><strong>Folder</strong> — Subfolder on the FTP server for this player</li>
+      <li><strong>Start date / Start time</strong> — Date and time of first automated access</li>
+      <li>
+        <strong>Overwrite</strong>
+        <ul>
+          <li><strong>Off</strong> — Playback continues; files load in background</li>
+          <li><strong>On</strong> — Playback pauses until download is complete</li>
+        </ul>
+      </li>
+      <li><strong>Hourly</strong> — Repeats every 60 minutes</li>
+      <li><strong>Daily</strong> — Repeats every 24 hours</li>
+      <li><strong>Weekly</strong> — (Coming soon)</li>
+      <li><strong>Monthly</strong> — (Coming soon)</li>
+      <li><strong>Interval in seconds</strong> — (Coming soon)</li>
+    </ul>
+    <ul>
+      <li><strong>Start FTP download manually</strong> — Start the download immediately at the push of a button. Useful for testing your setup.</li>
+    </ul>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      Server data and login are only current after you have completed the setup!
+    </div>
+
+    <h4>4.2.3 Remote Access</h4>
+    <p>Click the <strong>ℹ icon</strong> to show information about the current clip:</p>
+    <ul>
+      <li>Current item · Progress · Remaining time · Total duration · Previous item · Next item</li>
+    </ul>
+    <p>Use the control symbols to pause, play, go to next/previous item.</p>
+
+    <h4>4.2.4 DMX/ArtNet Setup</h4>
+    <p>Create and manage DMX/ArtNet scenes. Left panel: live preview output. Right panel settings:</p>
+    <ul>
+      <li><strong>Scene Index</strong> — Read-only index; used to reference the scene in the playlist</li>
+      <li><strong>Scene Name</strong> — Freely selectable label</li>
+      <li><strong>DMX/ArtNet</strong> — Select output technology</li>
+      <li><strong>Transition Time</strong> — Fade-in duration for this scene</li>
+      <li><strong>Casting</strong> — Broadcast (all ArtNet devices) or Unicast (specific IP)</li>
+      <li><strong>ArtNet IP</strong> — Unicast destination IP address</li>
+      <li><strong>Universe</strong> — ArtNet universe selection</li>
+      <li><strong>Live Output</strong> — Output current values live via DMX/ArtNet</li>
+      <li><strong>Blackout</strong> — Set all channels to 0</li>
+      <li><strong>Save scene</strong> — Save the current scene to the SD card / USB memory</li>
+      <li><strong>Delete scene</strong> — Delete the current ArtNet scene</li>
+    </ul>
+    <p>Channel range buttons (1–100, 101–200, etc.) limit the visible DMX channels. Click a percentage value to open a fader for fine adjustment.</p>
+
+    <h4 id="s4-sd">4.2.5 SD Card / USB Memory</h4>
+    <ul>
+      <li><strong>Update map content</strong> — Click this after making changes via FTP or deleting files</li>
+      <li><strong>File browser</strong> — Shows all files with size and modification date. Actions per file: Delete / Play / Edit / Timecode / Touch
+        <ul>
+          <li><strong>Timecode</strong> — Opens the timecode page for the media file <em>(currently without function)</em></li>
+          <li><strong>Touch</strong> — Opens the touch page for creating touch zone files</li>
+        </ul>
+      </li>
+      <li><strong>New folder</strong> — Only works in external browsers, not on the internal display</li>
+      <li><strong>Upload</strong> — Upload small files (&lt; 2 MB), e.g. playlists or <code>CFPSetup.txt</code></li>
+    </ul>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      After uploading files, you <strong>MUST</strong> click "Update map content" for changes to take effect.<br>
+      <strong>Media files cannot be uploaded</strong> — use FTP instead.
+    </div>
+
+    <h4 id="s4-admin">4.2.6 Administration</h4>
+    <ul>
+      <li><strong>Restart player</strong> — Restarts without affecting settings</li>
+      <li><strong>Reset firmware data</strong> — Resets application settings to factory defaults. Recommended if the player no longer works optimally.</li>
+      <li><strong>Restore factory settings</strong> — ALL settings and data are reset</li>
+    </ul>
+    <h5>Keyboard Shortcuts (with USB keyboard connected)</h5>
+    <table>
+      <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Ctrl+S</kbd> or <kbd>Ctrl+F5</kbd></td><td>Show setup menu</td></tr>
+        <tr><td><kbd>Ctrl+T</kbd> or <kbd>Ctrl+F8</kbd></td><td>Show / hide touch window overlay</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="s4-osd">4.3 Alternative OSD Menu</h3>
+    <p>Press the <strong>Setup button</strong> on the remote control to open the SZe setup menu on the right side of the screen.</p>
+
+    <h4>4.3.1 Network &amp; Internet</h4>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      WiFi <strong>ONLY</strong> works if <strong>NO LAN cable</strong> is connected!
+    </div>
+    <ul>
+      <li><strong>4.3.1.1 Wi-Fi and available networks</strong> — Select from available networks; enter password via USB keyboard or on-screen keyboard (navigate with remote)</li>
+      <li><strong>4.3.1.2 WiFi IP and details</strong> — Set proxy, static IP, gateway, subnet, DNS for WiFi</li>
+      <li><strong>4.3.1.3 Add new network</strong> — Manually enter a hidden SSID</li>
+      <li><strong>4.3.1.4 Scanning always available</strong> — No function on the molitor 4K Light player</li>
+      <li><strong>4.3.1.5 Proxy settings (Cable LAN)</strong> — Define a proxy server for internet access</li>
+      <li><strong>4.3.1.6 IP Settings (Cable LAN)</strong> — Select DHCP or configure static IP/gateway/subnet/DNS</li>
+    </ul>
+
+    <h4>4.3.2 Display Setup</h4>
+    <p>Navigate to: <strong>Display Setup → Display → Screen Resolution</strong></p>
+    <ul>
+      <li><strong>4.3.2.1 Auto switch to best resolution</strong> — Enable EDID auto-detection</li>
+      <li><strong>4.3.2.2 Display mode</strong> — Select resolution (must confirm within 15 seconds, otherwise reverts)</li>
+      <li><strong>4.3.2.3 Color Depth Settings</strong> — On = 10-bit (HDR), Off = 8-bit</li>
+      <li><strong>4.3.2.4 Color Space Settings</strong> — Select desired color space</li>
+      <li><strong>4.3.2.5 Dolby Vision</strong> — Enable/Disable Dolby Vision HDR <em>(Experimental)</em></li>
+    </ul>
+
+    <h4>4.3.3 Date &amp; Time</h4>
+    <p>Set time automatically via NTP or manually. Define the time zone. The time is maintained by an integrated battery even without power.</p>
+
+    <h4>4.3.4 Bluetooth Setup</h4>
+    <p>Connect Bluetooth speakers or headphones. Select "Add accessory", activate pairing on your device, then select it from the list.</p>
+
+    <h3 id="s4-cfpsetup">4.4 CFPSetup.txt File</h3>
+    <p>A plain-text configuration file placed on the SD card or USB memory. Settings are written as <code>key value</code> or <code>key=value</code> pairs.</p>
+
+    <h4>Video and Audio Settings</h4>
+    <ul>
+      <li><strong>HDMI Auto</strong> — On / Off</li>
+      <li><strong>Resolution</strong> — Set display resolution manually</li>
+      <li><strong>Volume</strong> — 0 (silent) to 10 (maximum amplified)</li>
+      <li><strong>ForceDisplayActivation</strong> — Re-applies video output 20 s after startup. Useful for certain screens/projectors.</li>
+    </ul>
+
+    <h4>Network</h4>
+    <h5>LAN</h5>
+    <pre><code>DHCP Off
+IP 192.168.0.2
+Subnet 255.255.255.0
+Gateway 192.168.0.1
+DNS 8.8.8.8
+UDP Port 4950</code></pre>
+
+    <h5>WiFi</h5>
+    <pre><code>Wifi On
+Wifi SSID MyNetworkName
+Wifi Key MyWifiPassword
+Wifi Type WPA2</code></pre>
+
+    <h5>4.4.2.3 Hotspot</h5>
+    <p>The player can open its own WiFi hotspot for remote access and content upload:</p>
+    <pre><code>Hotspot On
+Hotspot SSID MolitorPlayer
+Hotspot Key hotspotpassword</code></pre>
+
+    <h4>Other Settings</h4>
+    <ul>
+      <li><strong>Display time</strong> — Display duration in seconds for images and web pages</li>
+      <li><strong>Orientation</strong> — Landscape / Portrait / Reverse Landscape / Reverse Portrait</li>
+      <li><strong>Animation</strong> — Off / Fade / Slide / Rotation</li>
+      <li><strong>Animationtime</strong> — Duration of animation in milliseconds (e.g. <code>Animationtime 1000</code>)</li>
+      <li><strong>FTP Server</strong> — On / Off</li>
+      <li><strong>USB type</strong> — IOBoard / Relay / DMX / AirSensor / RFID / Keyboard / RS232 / WS2812</li>
+      <li><strong>Longclick Timeout</strong> — Duration in ms until long touch is detected</li>
+      <li><strong>DMX</strong> — On / Off</li>
+      <li><strong>ArtNet</strong> — On / Off</li>
+      <li><strong>Playback mode</strong> — All files in loop / First file in loop / Selected file in loop</li>
+      <li><strong>Storage Master</strong> — SD / USB — defines which storage has priority</li>
+      <li><strong>NTP Zeit</strong> — On / Off — enable automatic time synchronization</li>
+      <li><strong>NTP Zeitserver</strong> — NTP server address (e.g. <code>0.de.pool.ntp.org</code>)</li>
+      <li><strong>Timezone</strong> — Timezone name (e.g. <code>CET</code>)</li>
+    </ul>
+
+    <h4>Complete CFPSetup.txt Example</h4>
+    <p>The following shows a complete <code>CFPSetup.txt</code> with all available keys and their default or typical values:</p>
+    <pre><code>HDMI Auto On
+Resolution 3840x2160p60
+ForceDisplayActivation Off
+Volume 5
+Displaytime 10
+DHCP On
+IP 192.168.0.2
+Subnet 255.255.255.0
+Gateway 192.168.0.1
+DNS 192.168.0.1
+UDP Port 4950
+WLAN On
+WLAN SSID MyNetworkName
+WLAN KEY MyWifiPassword
+WLAN TYP WPA2
+WLAN DHCP On
+WLAN IP 192.168.3.5
+WLAN Subnetz 255.255.255.0
+WLAN Gateway 192.168.3.1
+WLAN DNS 8.8.8.8
+Hotspot Off
+Hotspot SSID CFPlayer_1807
+Hotspot KEY CFPlayerHotspotKey
+Synchronisierung Off
+Synchron Master
+Synchrongruppe 1
+Orientation Landscape
+ShowTouch Off
+Animation Off
+Animationtime 1000
+USB Type IOBoard
+NTP Zeit On
+NTP Zeitserver 0.de.pool.ntp.org
+Timezone CET
+FTP Server On
+FTP Server Username SZeSD
+FTP Server Password szegmbh
+FTP USB Username SZeUSB
+FTP USB Password szegmbh
+Storage Master SD
+Longclick Timeout 1000
+Play Mode Repeat All
+ArtNet On
+DMX On</code></pre>
+    <div class="notice notice-info">
+      <span class="label">Note</span>
+      You do not need to include all keys — only specify the settings you want to change from the default. Lines starting with <code>;</code> are treated as comments and ignored.
+    </div>
+
+
+    <!-- ════════════════════ 5. PLAY FILES ════════════════════ -->
+    <h2 id="s5"><span class="num">5.</span> Play Files</h2>
+
+    <h3 id="s5-nopl">5.1 Without Playlist</h3>
+    <p>Simplest way to play files:</p>
+    <ol>
+      <li>Copy files to the <strong>root directory</strong> of the MicroSD card or USB memory</li>
+      <li>Insert into the player</li>
+    </ol>
+    <p>Playback starts in <strong>alphanumeric order</strong> (0–9, A–Z). Videos play once; images display for 5 seconds. After all files, it loops.</p>
+
+    <p><strong>Example playback order:</strong></p>
+    <ol>
+      <li><code>0.jpg</code></li>
+      <li><code>05_Film5.mp4</code></li>
+      <li><code>1.mp4</code></li>
+      <li><code>Display1.mov</code></li>
+      <li><code>Finish.jpg</code></li>
+    </ol>
+
+    <p><strong>Playback modes</strong> (configurable in settings or CFPSetup.txt):</p>
+    <ul>
+      <li><strong>All files in loop</strong> — All files loop in alphanumeric order</li>
+      <li><strong>First file in loop</strong> — First file loops; after an external command, returns to the first file</li>
+      <li><strong>Selected file in loop</strong> — Currently selected file loops continuously</li>
+    </ul>
+
+    <h3 id="s5-playlist">5.2 With Playlist (PLAYLIST.txt)</h3>
+    <p>To define a custom order, or to hold a file until user interaction (touch, network command, etc.),
+    create a <code>PLAYLIST.txt</code> file in the root directory of the SD card or USB memory.</p>
+
+    <h4>Required Parameters</h4>
+    <table>
+      <thead><tr><th width="35%">Parameter</th><th>Description &amp; Example</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>[ITEM #]</code></td>
+          <td>Every entry must start with this line. Replace <code>#</code> with the index (starting at 0). All playback commands refer to this index.<br>
+          Example: <code>[ITEM 0]</code></td>
+        </tr>
+        <tr>
+          <td><code>Datei=filename.ext</code></td>
+          <td>Filename including extension. <strong>Case-sensitive. No spaces allowed.</strong><br>
+          Example: <code>Datei=Film1.mp4</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Optional Parameters</h4>
+    <table>
+      <thead><tr><th width="35%">Parameter</th><th>Description &amp; Example</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>Displaytime=#</code></td>
+          <td>Display duration in seconds — valid for images and websites. Default: 5.<br>
+          Use <code>-1</code> for endless display until another ITEM is triggered from outside.<br>
+          <em>Example: <code>Displaytime=6</code></em></td>
+        </tr>
+        <tr>
+          <td><code>Succ=#</code></td>
+          <td>Successor item (by ITEM number).<br><em>Example: <code>Succ=1</code> → ITEM 1 plays next</em></td>
+        </tr>
+        <tr>
+          <td><code>RandomSucc=#,#,#</code></td>
+          <td>Random successor chosen from a list of ITEM numbers.<br><em>Example: <code>RandomSucc=1,2,4,6,8</code></em></td>
+        </tr>
+        <tr>
+          <td><code>Random</code></td>
+          <td>A random ITEM is chosen as successor.</td>
+        </tr>
+        <tr>
+          <td><code>Loop=#</code></td>
+          <td>Repeat count. <code>-1</code> = endless loop; a positive number plays that many times.<br>
+          <em>Example: <code>Loop=-1</code> (endless) · <code>Loop=5</code> (five times)</em></td>
+        </tr>
+        <tr>
+          <td><code>Volume=#</code></td>
+          <td>Volume for this item. 0 = 0%, 10 = 100%.<br>
+          <em>Example: <code>Volume=3</code> → 30% volume</em></td>
+        </tr>
+        <tr>
+          <td><code>Interruptible=</code></td>
+          <td>Whether this item can be interrupted.<br>
+          <code>TRUE</code> = can be interrupted · <code>FALSE</code> = must play to completion</td>
+        </tr>
+        <tr>
+          <td><code>Orientation=</code></td>
+          <td>Screen orientation for this item.<br>
+          Values: <code>Landscape</code> · <code>Portrait</code> · <code>Reverse Landscape</code> · <code>Reverse Portrait</code></td>
+        </tr>
+        <tr>
+          <td><code>IP x.x.x.x port cmd</code></td>
+          <td>Send a UDP command when this item starts.<br>
+          <em>Example: <code>IP 192.168.0.5 4950 LampOn</code></em><br>
+          Sends "LampOn" to IP 192.168.0.5, port 4950.</td>
+        </tr>
+        <tr>
+          <td><code>Relay1=on Relay2=off</code></td>
+          <td>Switch relays on or off when item starts.<br>
+          <em>Example: <code>Relay1=on Relay2=off Relay3=on</code></em></td>
+        </tr>
+        <tr>
+          <td><code>DMX_Set ch:val,…</code></td>
+          <td>Set DMX channels when item starts.<br>
+          <em>Example: <code>DMX_Set 1:255,2:255,3:255,4:255</code></em> (channels 1–4 → 255)</td>
+        </tr>
+        <tr>
+          <td><code>DMX_Fade(val,sec) ch,…</code></td>
+          <td>Fade channels to a value over a duration.<br>
+          <em>Example: <code>DMX_Fade(255,2) 1,200,300,512</code></em><br>
+          Channels 1, 200, 300, 512 faded to 255 in 2 seconds.</td>
+        </tr>
+        <tr>
+          <td><code>LED1=on LED2=off</code></td>
+          <td>Control USB IOBoard LED outputs.<br>
+          <em>Example: <code>LED1=on LED2=off LED3=on</code></em></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Optional Touch Parameters</h4>
+    <table>
+      <thead><tr><th width="35%">Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>Zoom=On / Zoom=Off</code></td>
+          <td>Enable/disable pinch-to-zoom for images and HTML</td>
+        </tr>
+        <tr>
+          <td><code>Swipe=On / Swipe=Off</code></td>
+          <td>Enable/disable swipe gestures.<br>Swipe right→left = next ITEM · Swipe left→right = previous ITEM</td>
+        </tr>
+        <tr>
+          <td><code>Showtouch=On / Showtouch=Off</code></td>
+          <td>Show a visual animation at the touch point each time the screen is touched</td>
+        </tr>
+        <tr>
+          <td><code>X=, Y=, W=, H=, M=1, PLAY #</code></td>
+          <td>Define a touch zone within this playlist item (see Section 8.3 for full details)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Basic Example</h4>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+
+[ITEM 1]
+Datei=Bild1.jpg
+Displaytime=12
+
+[ITEM 2]
+Datei=Film2.mp4</code></pre>
+
+    <h4>Extended Example</h4>
+    <pre><code>[ITEM 0]
+Datei=Intro.mp4
+Succ=1
+Loop=-1
+
+[ITEM 1]
+Datei=MainContent.mp4
+Displaytime=-1
+IP 192.168.0.10 4950 StartLighting
+DMX_Set 1:255,2:128
+Succ=2
+
+[ITEM 2]
+Datei=EndScreen.jpg
+Displaytime=10
+Succ=0</code></pre>
+
+    <h3 id="s5-cal">5.3 Calendar Playlist</h3>
+    <p>Restrict items to specific dates, times, or days of the week.</p>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      Verify the player has the correct date and time set before using calendar features.
+    </div>
+    <table>
+      <thead><tr><th width="35%">Parameter</th><th>Description &amp; Example</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>Datum von=tt.mm.jjjj</code></td>
+          <td>Start date from which the item may be shown.<br>
+          <em>Example: <code>Datum von=25.05.2018</code> → only from May 25, 2018</em></td>
+        </tr>
+        <tr>
+          <td><code>Datum bis=tt.mm.jjjj</code></td>
+          <td>End date until which the item may be shown.<br>
+          <em>Example: <code>Datum bis=01.08.2018</code> → not shown from August 2 onwards</em></td>
+        </tr>
+        <tr>
+          <td><code>Zeit von=hh:mm:ss</code></td>
+          <td>Daily start time.<br>
+          <em>Example: <code>Zeit von=14:00:00</code> → only from 2:00 PM</em></td>
+        </tr>
+        <tr>
+          <td><code>Zeit bis=hh:mm:ss</code></td>
+          <td>Daily end time.<br>
+          <em>Example: <code>Zeit bis=18:00:00</code> → not shown from 18:00:01 onwards</em></td>
+        </tr>
+        <tr>
+          <td><code>Wochentage=…</code></td>
+          <td>Days when item may play.<br>
+          Format: <code>Mo,Di,Mi,Do,Fr,Sa,So</code><br>
+          <em>Example: <code>Wochentage=Mo,Di,Sa,So</code></em></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Calendar Playlist Example</h4>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+Datum von=25.05.2018
+Datum bis=01.08.2018
+Zeit von=08:00:00
+Zeit bis=18:00:00
+Wochentage=Mo,Di,Mi,Do,Fr
+
+[ITEM 1]
+Datei=Film2.mp4</code></pre>
+    <p>In this example, ITEM 0 is only shown between 25 May and 1 August 2018, on weekdays, between 08:00 and 18:00. Outside these times, ITEM 1 plays.</p>
+
+    <h3 id="s5-html5">5.4 HTML5 Browser</h3>
+    <p>The player has a built-in HTML5 browser supporting HTML5, CSS, JavaScript, and PHP.</p>
+    <ol>
+      <li>Copy all HTML files and subfolders to the SD card / USB storage</li>
+      <li>Reference the main file in the playlist using the <code>HTML=</code> parameter</li>
+    </ol>
+
+    <h4>Local HTML File</h4>
+    <pre><code>[ITEM 0]
+HTML=index.html
+Displaytime=-1</code></pre>
+
+    <h4>External URL</h4>
+    <pre><code>[ITEM 0]
+HTML=https://www.example.com
+Displaytime=30</code></pre>
+
+    <h4>Combined Playlist (Video + Images + HTML)</h4>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+
+[ITEM 1]
+Datei=Bild1.jpg
+Displaytime=10
+
+[ITEM 2]
+HTML=index.html
+Displaytime=-1</code></pre>
+
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      The URL/file must be accessible. If it is not, the item is cancelled and skipped.
+    </div>
+
+    <h4>Optional HTML Parameters</h4>
+    <table>
+      <thead><tr><th width="35%">Parameter</th><th>Description &amp; Example</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>Zoom factor=#</code></td>
+          <td>Magnification factor in %. Default: 100.<br>
+          <em>Example: <code>Zoom factor=150</code> → 150% zoom</em></td>
+        </tr>
+        <tr>
+          <td><code>Whitelist=url</code></td>
+          <td>Restrict HTML to specific domains. Multiple entries allowed. When any whitelist entry exists, all blacklist entries are ignored.<br>
+          <strong>Note:</strong> http and https are treated separately.<br>
+          <em>Example: <code>Whitelist=https://support.molitor-berlin.de</code></em></td>
+        </tr>
+        <tr>
+          <td><code>Blacklist=url</code></td>
+          <td>Block specific domains. Multiple entries allowed.<br>
+          <em>Example: <code>Blacklist=https://www.facebook.com/</code></em></td>
+        </tr>
+        <tr>
+          <td><code>HTMLTimeout=#</code></td>
+          <td>Reload the homepage after X seconds without input. Useful for kiosk/visitor reset.<br>
+          <em>Example: <code>HTMLTimeout=120</code></em></td>
+        </tr>
+        <tr>
+          <td><code>Inactive=#</code></td>
+          <td>Move to the next ITEM after X seconds without any touch/keyboard/mouse input.<br>
+          <em>Example: <code>Inactive=120</code></em></td>
+        </tr>
+        <tr>
+          <td><code>Javascript_Inject=On</code></td>
+          <td>Inject a JavaScript interface into the WebView (see below)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Whitelist / Blacklist Example</h4>
+    <pre><code>[ITEM 0]
+HTML=https://molitor-produkte.de
+Whitelist=https://support.molitor-berlin.de
+Displaytime=-1</code></pre>
+    <pre><code>[ITEM 0]
+HTML=https://www.startpage.com
+Blacklist=https://www.facebook.com
+Blacklist=https://www.twitter.com
+Displaytime=-1</code></pre>
+
+    <h4>HTMLTimeout / Inactive / Javascript_Inject Example</h4>
+    <pre><code>[ITEM 0]
+HTML=index.html
+HTMLTimeout=120
+Inactive=300
+Javascript_Inject=On
+Displaytime=-1</code></pre>
+
+    <h3 id="s5-jsinject">5.5 HTML JavaScript Inject</h3>
+    <p>When <code>Javascript_Inject=On</code> is set in the playlist, a function is injected into the page's JavaScript that allows sending commands back to the player:</p>
+    <pre><code>MessageToPlayer.send("next");    // jump to next playlist item
+MessageToPlayer.send("prev");    // jump to previous playlist item
+MessageToPlayer.send("play 3");  // play item with index 3</code></pre>
+
+    <h4>5.2.7.1 Receive Key Input in the WebView</h4>
+    <p>Key and digital inputs are forwarded to the WebView as a JavaScript function call:</p>
+    <pre><code>function Key(keyIndex) {
+  switch (keyIndex) {
+    case 1:
+      // Action for key 1
+      break;
+    case 2:
+      // Action for key 2
+      break;
+  }
+}</code></pre>
+    <p><strong>Key assignment:</strong></p>
+    <ul>
+      <li><code>Key(1)</code> to <code>Key(10)</code> — Board 1 inputs</li>
+      <li><code>Key(11)</code> to <code>Key(20)</code> — Board 2 inputs</li>
+      <li>… (depending on board addressing)</li>
+    </ul>
+
+    <h5>Reaction to Opening a Contact</h5>
+    <pre><code>function Key_Off(keyIndex) {
+  switch (keyIndex) {
+    case 1:
+      // Action when contact 1 opens
+      break;
+  }
+}</code></pre>
+
+    <h4>5.2.7.2 Control IOBoard LEDs from JavaScript</h4>
+    <pre><code>callPlayer("LED L1:On,L2:Off,L3:Off");</code></pre>
+
+    <h4>5.2.7.3 Send RS232 Commands from the WebView</h4>
+    <pre><code>callPlayer("RS232 command to serial port");</code></pre>
+    <p>Everything after <code>RS232</code> is sent unchanged via the serial interface.</p>
+
+    <h5>Receive RS232 Messages in the WebView</h5>
+    <p>The RS232 device must prefix its output with <code>HTML</code>:</p>
+    <pre><code>HTML RS232_InWebview(message)</code></pre>
+    <p>Everything after <code>HTML</code> is executed as JavaScript in the WebView:</p>
+    <pre><code>function RS232_InWebview(message) {
+  console.log("Received RS232: " + message);
+}</code></pre>
+
+    <h4>5.4 Timecode Functions in Playlist</h4>
+    <p>Timecode commands can be placed directly inside a playlist entry without a separate <code>.sze</code> file. The syntax is identical — see <a href="#s6">Section 6</a> for all available commands.</p>
+
+
+    <!-- ════════════════════ 6. TIMECODE ════════════════════ -->
+    <h2 id="s6"><span class="num">6.</span> Timecode Functions (*.sze File)</h2>
+
+    <h3>File Structure</h3>
+    <p>Each time a video starts, the player checks for an associated <code>.sze</code> file with the exact same name:</p>
+    <table>
+      <thead><tr><th>Media file</th><th>Required .sze filename</th></tr></thead>
+      <tbody>
+        <tr><td><code>Film1.mp4</code></td><td><code>Film1.mp4.sze</code></td></tr>
+      </tbody>
+    </table>
+    <p>Each command is on its own line. The line starts with <code>@</code>, followed by the timecode, then a <code>&gt;</code> and the command.
+    Accuracy: one frame at 60 fps = <strong>16 ms</strong>.</p>
+    <p><strong>Timecode format:</strong> <code>@ HH:MM:ss.ms</code></p>
+    <div class="notice notice-warning">
+      <span class="label">Attention</span>
+      Use a <strong>period</strong> (<code>.</code>) before the milliseconds — not a comma.
+    </div>
+    <p>All commands except <em>Pause</em> are followed by the <code>&gt;</code> character before the command parameters.</p>
+
+    <h3>Available Commands</h3>
+
+    <h4>Pause</h4>
+    <p>Pauses playback until resumed manually. <em>No</em> <code>&gt;</code> sign or further parameters.</p>
+    <pre><code>@ 00:00:01.500</code></pre>
+
+    <h4>UDP Telegram</h4>
+    <p>Sends a UDP message to any IP address and port.</p>
+    <pre><code>@ HH:MM:ss.ms &gt; IP PORT telegram</code></pre>
+    <table>
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>IP</code></td><td>IP address of the recipient</td></tr>
+        <tr><td><code>PORT</code></td><td>Port number of the recipient</td></tr>
+        <tr><td><code>telegram</code></td><td>Message text to send</td></tr>
+      </tbody>
+    </table>
+    <pre><code>@ 00:00:01.500 &gt; 192.168.178.50 4950 LampOn</code></pre>
+
+    <h4>RS232 Telegram</h4>
+    <p>Sends a message via the RS232 serial interface.</p>
+    <pre><code>@ HH:MM:ss.ms &gt; RS232 telegram</code></pre>
+    <p>Optional suffixes: <code>[CR]</code> appends carriage return (0x0D) · <code>[LF]</code> appends line feed (0x0A).</p>
+    <pre><code>@ 00:00:01.500 &gt; RS232 LampOn[CR][LF]</code></pre>
+
+    <h4>Relay</h4>
+    <p>Open or close relay contacts on the USB relay card.</p>
+    <pre><code>@ HH:MM:ss.ms &gt; Relay Rn:State[,Rn:State,…]</code></pre>
+    <p>With one USB card: relays 1–8. With two USB cards: 1–16.<br>
+    State: <code>On</code> = relay closed · <code>Off</code> = relay open.</p>
+    <pre><code>@ 00:00:01.500 &gt; Relay R1:On,R2:Off,R7:Off
+@ 00:00:07.500 &gt; Relay R1-R7:Off
+@ 00:00:10.500 &gt; Relay R3-R6:On</code></pre>
+
+    <h4>USB IOBoard LEDs</h4>
+    <p>Switch IOBoard output LEDs on or off.</p>
+    <pre><code>@ HH:MM:ss.ms &gt; LED Ln:State[,Ln:State,…]</code></pre>
+    <p>With one board: L1–L10. With two boards: L11–L20.</p>
+    <pre><code>@ 00:00:01.500 &gt; LED L1:On,L2:Off,L3:Off</code></pre>
+
+    <h4>DMX_Set</h4>
+    <p>Sets specified DMX channels to fixed values immediately.</p>
+    <pre><code>@ HH:MM:ss.ms &gt; DMX_Set Channel:Value[,Channel:Value,…]</code></pre>
+    <p>Channels: 1–512 · Values: 0–255</p>
+    <pre><code>@ 00:00:01.500 &gt; DMX_Set 1:115,2:255,110:255,510:123</code></pre>
+
+    <h4>DMX_Fade</h4>
+    <p>Fades specified channels to an end value over a duration.</p>
+    <pre><code>@ HH:MM:ss.ms &gt; DMX_Fade(endValue, fadeDuration) channel1,channel2,…</code></pre>
+    <p>End value: 0–255 · Fade duration: seconds (any value) · Channels: 1–512</p>
+    <pre><code>@ 00:00:01.500 &gt; DMX_Fade(255,3) 1,2,3,4</code></pre>
+    <p><em>Channels 1–4 faded to 255 in 3 seconds.</em></p>
+
+
+    <!-- ════════════════════ 7. SYNCHRONIZATION ════════════════════ -->
+    <h2 id="s7"><span class="num">7.</span> Synchronization</h2>
+    <p>Synchronize multiple molitor 4K Light players for frame-accurate video wall playback.</p>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      All players to be synchronized <strong>MUST</strong> be on the same network and use the same UDP port!
+    </div>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      When using a playlist, <strong>ITEM numbers must match</strong> across all players. When the master starts ITEM 5, ITEM 5 also starts on all slaves — regardless of file name.
+    </div>
+    <p>No limit to the number of synchronized players (apart from IP4 protocol limits).
+    Up to <strong>10 independent sync groups</strong> can run on the same network.
+    Synchronization is actively regulated — players remain <strong>frame-accurate</strong> even during long videos.
+    Devices that join later are immediately synchronized to the current position.</p>
+
+    <div class="notice notice-info">
+      <span class="label">Note</span>
+      All players to be synchronized must be on the same network. See <a href="#s3">Section 3 — Getting Started</a> for network setup details.
+    </div>
+
+    <h3>Set Up a Video Wall</h3>
+
+    <h4>Prepare Content</h4>
+    <p>For frame-accurate sync, all videos must have:</p>
+    <ul>
+      <li>Exactly the <strong>same length</strong></li>
+      <li>Exactly the <strong>same frame rate</strong></li>
+      <li>The <strong>same, ideally fixed bitrate</strong></li>
+    </ul>
+
+    <h4>Distribute Content to Players</h4>
+    <p>Distribute the content to each player according to your screen layout.</p>
+
+    <h4>7.1.3.1 Playback Without Playlist</h4>
+    <p>Files play in alphanumeric order. Name files consistently so the alphanumeric order matches across all players.</p>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      If the file order differs between players, synchronization will fail!
+    </div>
+    <table>
+      <thead><tr><th>Player</th><th>Card contents</th></tr></thead>
+      <tbody>
+        <tr><td>Player 1 (left)</td><td>Film1_left.mp4 · Film2_left.mp4 · Film3_left.mp4</td></tr>
+        <tr><td>Player 2 (center)</td><td>Film1_center.mp4 · Film2_center.mp4 · Film3_center.mp4</td></tr>
+        <tr><td>Player 3 (right)</td><td>Film1_right.mp4 · Film2_right.mp4 · Film3_right.mp4</td></tr>
+      </tbody>
+    </table>
+    <p>Film1 plays synchronously first, then Film2, then Film3.</p>
+
+    <h4>7.1.3.2 Playback With Playlist</h4>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      Ensure ITEM numbers <strong>and total item counts</strong> match across all players.
+    </div>
+    <table>
+      <thead><tr><th>Player</th><th>[ITEM 0]</th><th>[ITEM 1]</th></tr></thead>
+      <tbody>
+        <tr><td>Master (left)</td><td>Film1_left.mp4</td><td>Film2_left.mp4</td></tr>
+        <tr><td>Slave (center)</td><td>Film1_center.mp4</td><td>Film2_center.mp4</td></tr>
+        <tr><td>Slave (right)</td><td>Film1_right.mp4</td><td>Film2_right.mp4</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Sync CFPSetup.txt Keys</h3>
+    <pre><code>Synchronisierung On
+Synchron Master
+Synchrongruppe 1
+Synchron Genauigkeit High</code></pre>
+    <p>For slave players, change <code>Synchron Master</code> to <code>Synchron Slave</code>.</p>
+
+    <h3>Select Sync Options</h3>
+    <ul>
+      <li><strong>Activation</strong> — Must be set to <strong>On</strong> on all players in the group</li>
+      <li>
+        <strong>Type</strong>
+        <ul>
+          <li><strong>Master</strong> — One player sends sync signals. Direct all external control to this player only.</li>
+          <li><strong>Slave</strong> — All other players follow the master</li>
+        </ul>
+      </li>
+      <li><strong>Group</strong> — All players must be in the same group (Group 1–10)</li>
+      <li>
+        <strong>Accuracy</strong>
+        <ul>
+          <li><strong>Minimal</strong> — Sync only at video start</li>
+          <li><strong>Low</strong> — Up to 1000 ms deviation accepted</li>
+          <li><strong>Medium</strong> — Up to 16 ms deviation accepted</li>
+          <li><strong>High</strong> — Up to 3 ms deviation. <em>Note: with audio output on slave players, resynchronization may be audible. Use a lower accuracy if this is a problem.</em></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      All players in a sync project should use the <strong>same accuracy</strong> setting.
+    </div>
+
+
+    <!-- ════════════════════ 8. EXTERNAL CONTROL ════════════════════ -->
+    <h2 id="s8"><span class="num">8.</span> External Control</h2>
+
+    <h3 id="s8-udp">8.1 Control via Network (UDP)</h3>
+    <p>The player is controlled via UDP network telegrams at its IP address and port (default: <strong>4950</strong>).</p>
+
+    <h4>Playback Commands</h4>
+    <table>
+      <thead><tr><th>Command</th><th>Alternatives</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>PAUSE</code></td>
+          <td><code>BREAK</code></td>
+          <td>Pause playback of the current clip</td>
+        </tr>
+        <tr>
+          <td><code>CONTINUE</code></td>
+          <td><code>CONT</code> · <code>RESUME</code> · <code>RESU</code></td>
+          <td>Resume previously paused playback</td>
+        </tr>
+        <tr>
+          <td><code>PAPL</code></td>
+          <td><code>PAUSE PLAY</code></td>
+          <td>Toggle pause/play: if playing → pause; if paused → play</td>
+        </tr>
+        <tr>
+          <td><code>STATUS?</code></td>
+          <td>—</td>
+          <td>Returns current status: <code>Playing</code> or <code>Paused</code></td>
+        </tr>
+        <tr>
+          <td><code>NEXT</code></td>
+          <td>—</td>
+          <td>Play next clip. Wraps to first clip if currently at the end.</td>
+        </tr>
+        <tr>
+          <td><code>PREV</code></td>
+          <td>—</td>
+          <td>Play previous clip. Restarts current clip if at the first item.</td>
+        </tr>
+        <tr>
+          <td><code>PLAY=nnnn</code></td>
+          <td><code>PLAYINDEX=nnnn</code></td>
+          <td>Play clip number <code>nnnn</code> — refers to [ITEM nnnn] or the alphanumeric index if no playlist.<br>
+          <em>Example: <code>PLAY=2</code> → plays clip number 2</em></td>
+        </tr>
+        <tr>
+          <td><code>PLAYFILE=name.ext</code></td>
+          <td>—</td>
+          <td>Play the specified file by name.<br>
+          <em>Example: <code>PLAYFILE=FILM1.mp4</code></em></td>
+        </tr>
+        <tr>
+          <td><code>JUMP=nnnn</code></td>
+          <td><code>JUMPTIME=nnnn</code></td>
+          <td>Jump to position <code>nnnn</code> milliseconds within the current video.<br>
+          <em>Example: <code>JUMP=20000</code> → jump to 20 seconds</em></td>
+        </tr>
+        <tr>
+          <td><code>DURATION?</code></td>
+          <td><code>RUNTIME?</code> · <code>JUMPTIME?</code></td>
+          <td>Returns total runtime in ms.<br>
+          <em>Example response: <code>RUNNING TIME=25000</code></em></td>
+        </tr>
+        <tr>
+          <td><code>REMAINING TIME?</code></td>
+          <td><code>TIMETOFINISH?</code></td>
+          <td>Returns remaining time in ms.<br>
+          <em>Example response: <code>REMAINING TIME=25000</code></em></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>File Commands</h4>
+    <table>
+      <thead><tr><th>Command</th><th>Function</th><th>Example Response</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>PLAYLIST?</code></td>
+          <td>Query the playlist contents</td>
+          <td>
+            <pre style="margin:0;font-size:12px;background:#1e1e1e;color:#d4d4d4;padding:8px;border-radius:4px">[ITEM 0]
+Datei=1.jpg
+Displaytime=2
+
+[ITEM 1]
+Datei=2.mp4</pre>
+          </td>
+        </tr>
+        <tr>
+          <td><code>FILE LIST?</code></td>
+          <td>Query SD card / USB memory contents</td>
+          <td>
+            <pre style="margin:0;font-size:12px;background:#1e1e1e;color:#d4d4d4;padding:8px;border-radius:4px">1.jpg
+2.mp4
+PLAYLIST.txt
+CFPSetup.txt</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>8.2 HTML by Touch</h3>
+    <p>When displaying HTML pages, the touchscreen works directly — open links, zoom, and swipe as on a smartphone or tablet.</p>
+
+    <h3 id="s8-touch">8.3 Touchscreen / Touch Windows</h3>
+    <p>Playback can be controlled by a connected USB touchscreen.
+    Up to <strong>127 touch windows</strong> per item can be defined in the playlist. Each window is valid only for its item's display duration — a new set of windows can be defined for each item.</p>
+    <p>Touch coordinates are scaled to <strong>1920 × 1080 pixels</strong> for all touchscreens (with special exceptions).
+    Origin (0, 0) is at the <strong>top-left corner</strong>, in Landscape orientation.</p>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      The 1920×1080 coordinate system only applies in <strong>Landscape orientation</strong>. See the sections below for other orientations.
+    </div>
+
+    <h4>8.4.2.1 Touch Command Syntax — Variant 1 (Current)</h4>
+    <table>
+      <thead><tr><th width="30%">Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>X=</code></td><td>X coordinate of the touch zone left edge (0–1920)</td></tr>
+        <tr><td><code>Y=</code></td><td>Y coordinate of the touch zone top edge (0–1080)</td></tr>
+        <tr><td><code>W=</code></td><td>Width of the touch zone in pixels</td></tr>
+        <tr><td><code>H=</code></td><td>Height of the touch zone in pixels</td></tr>
+        <tr><td><code>M=1</code></td><td>Mode (always 1)</td></tr>
+        <tr><td><code>PLAY #</code></td><td>Play ITEM # when this zone is touched</td></tr>
+      </tbody>
+    </table>
+    <p>Each touch zone is defined on a single line. Multiple zones can be placed in the same playlist item. Example with three touch zones:</p>
+    <pre><code>[ITEM 0]
+Datei=Menu.jpg
+Displaytime=-1
+X=0,    Y=0,   W=640, H=1080, M=1, PLAY 1
+X=640,  Y=0,   W=640, H=1080, M=1, PLAY 2
+X=1280, Y=0,   W=640, H=1080, M=1, PLAY 3
+
+[ITEM 1]
+Datei=Film1.mp4
+Succ=0
+
+[ITEM 2]
+Datei=Film2.mp4
+Succ=0
+
+[ITEM 3]
+Datei=Film3.mp4
+Succ=0</code></pre>
+
+    <h4>8.4.2.2 Touch Syntax — Variant 2 (Outdated, still compatible)</h4>
+    <p>An older syntax is still supported. Commands are identical; only the notation differs.</p>
+    <pre><code>T 0, 0, 400, 300, 1=PLAY 1</code></pre>
+    <p>Format: <code>T x, y, width, height, mode=PLAY itemNumber</code></p>
+
+    <h4>8.4.3 Touch Orientations</h4>
+    <ul>
+      <li><strong>8.4.3.1 Landscape (default)</strong> — Origin (0, 0) at top-left</li>
+      <li><strong>8.4.3.2 Reverse Landscape</strong> — Landscape rotated 180°</li>
+      <li><strong>8.4.3.3 Portrait</strong> — Rotated 90°</li>
+      <li><strong>8.4.3.4 Reverse Portrait</strong> — Portrait rotated 180°</li>
+    </ul>
+
+    <h4>Display Touch Windows</h4>
+    <p>Show a colored rectangle overlay at each touch zone with the touch command in white text.
+    Useful for verifying coordinates.</p>
+    <p>Activate in 4 ways:</p>
+    <ol>
+      <li><strong>Playlist</strong> — Add the line <code>Show_Touch_Windows</code></li>
+      <li><strong>Keyboard</strong> — <kbd>Ctrl+T</kbd> or <kbd>Ctrl+F8</kbd></li>
+      <li><strong>Remote control</strong> — Red K button (under Menu)</li>
+      <li><strong>Web interface</strong> — (Coming soon)</li>
+    </ol>
+    <h5>Playlist Example</h5>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+Show_Touch_Windows
+X=100, Y=92, W=566, H=878, M=1, PLAY 1
+X=700, Y=92, W=566, H=878, M=1, PLAY 2</code></pre>
+
+    <h3 id="s8-ioboard">8.4 USB IOBoard</h3>
+
+    <h4>Inputs</h4>
+    <p>The USB IOBoard provides <strong>10 inputs</strong> (IN1–IN10) for buttons, sensors, or normally-open contacts.
+    A contact is triggered by a short circuit between the <code>IN</code> pin and the corresponding <code>GND</code> pin.</p>
+    <p>By default, contacts 1–10 trigger ITEM 1–10 respectively (Contact 1 → ITEM 1, Contact 2 → ITEM 2, etc.).</p>
+
+    <h5>8.5.1.1 Custom Configuration with KeyOff</h5>
+    <p>Override the default mapping by adding <code>Key#=</code> entries to the playlist. This applies only to the item it is in — other items use the default mapping unless they also have custom key entries.</p>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+Key1=PLAY 6
+Key2=PLAY 5
+Key3=PLAY 4
+Key4=PLAY 3
+Key5=PLAY 2
+Key6=PLAY 1</code></pre>
+    <p>In this example, the key numbering is reversed — pressing contact 1 plays ITEM 6, contact 6 plays ITEM 1.</p>
+
+    <h5>Respond to Opening a Contact</h5>
+    <p>By default, there is no reaction to opening a contact. Add <code>Key#_Off=</code> entries to handle contact opening:</p>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+Key1=PLAY 1
+Key1_Off=PLAY 2
+Key2=PLAY 3
+Key2_Off=PLAY 4</code></pre>
+    <p>When contact 1 closes → play ITEM 1. When contact 1 opens → play ITEM 2.</p>
+
+    <h4>Outputs</h4>
+    <p>The USB IOBoard provides <strong>10 transistor-switched outputs</strong>.</p>
+    <ul>
+      <li>Input voltage: 5–24 V DC</li>
+      <li>Max output current: 1 A per channel</li>
+      <li>Connected to the PS+– connector</li>
+    </ul>
+    <div class="notice notice-warning">
+      <span class="label">Attention</span>
+      Pay attention to <strong>polarity</strong> when connecting the power supply to the PS+– connector.<br>
+      If many outputs are active simultaneously, the board may overheat.
+    </div>
+
+    <h5>Control LED Outputs from Playlist</h5>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+LED1=on
+LED2=off
+LED3=on
+
+[ITEM 1]
+Datei=Film2.mp4
+LED1=off
+LED2=on
+LED3=off</code></pre>
+
+    <h4>Operating Multiple USB IOBoards in Parallel</h4>
+    <p>With an active USB hub, up to 16 IOBoards can be connected (2 currently implemented). Keys run from Key1–Key20, outputs from LED1–LED20.</p>
+    <p>Boards are addressed using the <strong>red DIP switches</strong> (binary coding; bottom = off, top = on):</p>
+    <table>
+      <thead>
+        <tr><th>Switch 1</th><th>Switch 2</th><th>Switch 3</th><th>Switch 4</th><th>Board Index</th><th>Keys</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Off</td><td>Off</td><td>Off</td><td>Off</td><td>1</td><td>1–10</td></tr>
+        <tr><td>Off</td><td>Off</td><td>Off</td><td>On</td><td>2</td><td>11–20</td></tr>
+        <tr><td>Off</td><td>Off</td><td>On</td><td>Off</td><td>3</td><td>21–30</td></tr>
+        <tr><td colspan="4" style="text-align:center;color:#999">…</td><td>…</td><td>…</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="s8-usb">8.5 USB Devices</h3>
+
+    <h4>USB Number Pad</h4>
+    <p>Connect a USB number pad to any USB port. By default, keys 0–9 activate ITEM 0–9. Custom mapping can be defined in the playlist:</p>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+Num0=PLAY 0
+Num1=PLAY 1
+Num2=PLAY 2
+Num3=PLAY 3
+Num4=PLAY 4
+Num5=PLAY 5
+Num6=PLAY 6
+Num7=PLAY 7
+Num8=PLAY 8
+Num9=PLAY 9
+NumPlus=NEXT
+NumMinus=PREV</code></pre>
+
+    <h4>USB Presenter</h4>
+    <p>Logitech R400 is supported (additional models available on request).</p>
+    <table>
+      <thead><tr><th>Button</th><th>Default Action</th></tr></thead>
+      <tbody>
+        <tr><td>Back</td><td><code>PresenterBack</code> → previous item</td></tr>
+        <tr><td>Forward</td><td><code>PresenterForward</code> → next item</td></tr>
+        <tr><td>Play/Pause</td><td>Toggles <code>PresenterPlay</code> / <code>PresenterPause</code></td></tr>
+        <tr><td>Home</td><td><code>PresenterHome</code> → jump to first item</td></tr>
+      </tbody>
+    </table>
+    <p>Custom button mapping can be defined in the playlist using the key names above:</p>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+PresenterBack=PLAY 0
+PresenterForward=PLAY 2
+PresenterPlay=PLAY 1
+PresenterPause=PLAY 3
+PresenterHome=PLAY 0</code></pre>
+
+    <h4>USB Keyboard</h4>
+    <p>Connect a USB keyboard to operate the web browser and use keyboard shortcuts.</p>
+
+    <h4>USB Mouse</h4>
+    <p>Connect a USB mouse to operate the web browser.</p>
+
+
+    <!-- ════════════════════ 9. CONTENT UPDATE ════════════════════ -->
+    <h2 id="s9"><span class="num">9.</span> Content Update</h2>
+
+    <h3>9.1 Manual Access via FTP Client</h3>
+    <p>Use an FTP client such as <a href="https://filezilla-project.org/" target="_blank">FileZilla</a> (free).</p>
+    <table>
+      <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Server</td><td>IP address of the player</td></tr>
+        <tr><td>Port</td><td><code>2221</code></td></tr>
+        <tr><td>SD card login</td><td>Username: <code>SZeSD</code> · Password: <code>szegmbh</code></td></tr>
+        <tr><td>USB login</td><td>Username: <code>SZeUSB</code> · Password: <code>szegmbh</code></td></tr>
+      </tbody>
+    </table>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      FTP PORT is <strong>2221</strong>.<br>
+      After <strong>every</strong> upload or file change (including renaming), you <strong>MUST</strong> click
+      <strong>"Update map content"</strong> in the web interface for changes to take effect.
+    </div>
+
+    <h3>9.2 Automated FTP Download</h3>
+    <p>Configure automatic content updates from an FTP server. Set a start date and time, then choose the repeat interval.</p>
+    <p>These settings can also be configured via <code>CFPSetup.txt</code>:</p>
+    <pre><code>FTP Download On
+FTP Download Server 192.168.0.100
+FTP Download Username myuser
+FTP Download Password mypassword
+FTP Download Folder /content/player1
+FTP Download Start Date 01.01.2024
+FTP Download Start Time 02:00:00
+FTP Download Daily On
+FTP Download Overwrite Off</code></pre>
+    <ul>
+      <li><strong>FTP download</strong> — Off / On</li>
+      <li><strong>FTP server address</strong> — IP address of the download server</li>
+      <li><strong>FTP download username / password</strong> — Login credentials</li>
+      <li><strong>FTP download folder</strong> — Subfolder on the FTP server for this player</li>
+      <li><strong>Start date / Start time</strong> — Date and time of first automated access</li>
+      <li><strong>Hourly</strong> — Every 60 minutes from start date/time</li>
+      <li><strong>Daily</strong> — Every 24 hours</li>
+      <li><strong>Weekly</strong> — (Coming soon)</li>
+      <li><strong>Monthly</strong> — (Coming soon)</li>
+      <li><strong>Interval in seconds</strong> — (Coming soon)</li>
+      <li>
+        <strong>FTP download overwrite</strong>
+        <ul>
+          <li><strong>Off</strong> — Compare creation dates; only download newer files</li>
+          <li><strong>On</strong> — Download all files without date comparison</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4>Using a FileList.txt</h4>
+    <p>If a <code>FileList.txt</code> is present on the FTP server, the player downloads it first and follows its instructions:</p>
+    <table>
+      <thead><tr><th>Command</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><code>SD: filename</code></td><td>Copy file to SD card</td></tr>
+        <tr><td><code>Delete_SD: filename</code></td><td>Delete file from SD card</td></tr>
+        <tr><td><code>USB: filename</code></td><td>Copy file to USB storage</td></tr>
+        <tr><td><code>Delete_USB: filename</code></td><td>Delete file from USB storage</td></tr>
+      </tbody>
+    </table>
+    <h5>FileList.txt Example</h5>
+    <pre><code>SD:test1.mp4
+SD:test2.mp4
+SD:PLAYLIST.txt
+Delete_SD:oldfilm.mp4
+USB:backup.mp4
+Delete_USB:oldfile.jpg</code></pre>
+
+    <div class="notice notice-info">
+      <span class="label">Note</span>
+      Note the "FTP Download Overwrite" setting when using FileList.txt.
+    </div>
+
+    <h4>Without FileList.txt</h4>
+    <p>All files on the FTP server are downloaded in sequence, including subfolders.</p>
+    <div class="notice notice-important">
+      <span class="label">Important</span>
+      Note the <strong>FTP Download Overwrite</strong> setting — it controls whether existing files are compared by date or always overwritten.
+    </div>
+
+
+    <!-- ════════════════════ 10. DMX/ARTNET ════════════════════ -->
+    <h2 id="s10"><span class="num">10.</span> DMX / ArtNet Functions</h2>
+    <p>The molitor 4K Light player offers extensive DMX and ArtNet output functions.</p>
+
+    <h3>DMX Output</h3>
+
+    <h4>10.1.1.1 Available DMX Commands</h4>
+    <table>
+      <thead><tr><th width="40%">Command</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>DMX_Set ch:val[,ch:val,…]</code></td>
+          <td>Set channels immediately.<br>
+          Channels: 1–512 · Values: 0–255<br>
+          <em>Example: <code>DMX_Set 1:115,2:255,110:255,510:123</code></em></td>
+        </tr>
+        <tr>
+          <td><code>DMX_Fade(endVal,sec) ch[,ch,…]</code></td>
+          <td>Fade channels to end value over duration in seconds.<br>
+          A duration of 0 behaves like DMX_Set.<br>
+          <em>Example: <code>DMX_Fade(255,4) 1,2,3,4</code> → channels 1–4 to 255 in 4 seconds</em></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>10.1.1.2 Send at Item Start via Playlist</h4>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+DMX_Set 1:255,2:128,3:0
+
+[ITEM 1]
+Datei=Film2.mp4
+DMX_Fade(0,3) 1,2,3</code></pre>
+
+    <h4>10.1.1.3 Timecode-Triggered via .sze File</h4>
+    <pre><code>@ 00:00:01.500 &gt; DMX_Fade(255,2) 1,2,3,4
+@ 00:00:05.500 &gt; DMX_Set 1:0,2:0,3:0,4:0</code></pre>
+
+    <h3>ArtNet/DMX Scenes (Cues)</h3>
+    <p>Create complete scenes where all 512 channels of an ArtNet/DMX universe are set.
+    Scenes are stored as XML files in the <code>config/</code> subfolder on the player.</p>
+    <p>To create a scene in the web interface:</p>
+    <ol>
+      <li>Go to the <strong>DMX/ArtNet Setup</strong> page</li>
+      <li>Click <strong>"New ArtNet/DMX Scene"</strong> — a new entry appears in the left-panel scene list</li>
+      <li>Edit the channel values; enable <strong>Live Output</strong> to preview in real time via DMX/ArtNet</li>
+      <li>Click <strong>Save scene</strong> when satisfied</li>
+    </ol>
+    <p>The scene's <strong>index number</strong> (shown in the left panel) is used to reference it in the playlist or timecode file.</p>
+    <p>Reference a scene in the playlist:</p>
+    <pre><code>[ITEM 0]
+Datei=Film1.mp4
+ArtNetCue=1</code></pre>
+    <p>Or trigger at a specific timecode:</p>
+    <pre><code>@ 00:00:01.500 &gt; ArtNetCue 1</code></pre>
+
+    <div class="notice notice-info">
+      <span class="label">Note</span>
+      Art-Net™ is designed by and copyright of Artistic License Engineering Ltd.
+    </div>
+
+
+    <!-- ════════════════════ 11. APPENDIX ════════════════════ -->
+    <h2 id="s11"><span class="num">11.</span> Appendix</h2>
+
+    <h3>UltraHD Converter</h3>
+    <p>The player displays images natively at up to <strong>1920×1080 pixels</strong>. To use the full 4K resolution, convert images to 4K video using the included <strong>UltraHD Converter</strong> tool.</p>
+    <div class="notice notice-info">
+      <span class="label">Coming soon</span>
+      HDR video conversion will also be available, enabling even better contrast and colour range for 4K content.
+    </div>
+
+    <h4>Requirements</h4>
+    <p>A current <strong>Java version</strong> is required.
+    Download free from <a href="https://java.com/en/download/" target="_blank">java.com/en/download/</a>.</p>
+
+    <h4>Steps</h4>
+    <ol>
+      <li>Double-click <code>UltraHD_Konverter.jar</code> to start</li>
+      <li>Browse to your folder of 4K images, click <strong>"Add Image Files"</strong></li>
+      <li>Set properties:
+        <ul>
+          <li><strong>Display time</strong> — Duration of the resulting video in seconds</li>
+          <li><strong>Orientation</strong> — Original / 90° right / 180° mirrored / 270° right</li>
+          <li><strong>Resolution</strong> — 3840×2160 recommended for maximum sharpness</li>
+        </ul>
+      </li>
+      <li>Select a destination folder</li>
+      <li>Click <strong>Start</strong> to begin conversion</li>
+      <li>Copy the converted videos to the SD card or USB memory</li>
+    </ol>
+
+    <div style="margin-top:40px;padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:#999;line-height:1.6;">
+      <strong style="font-size:12px;color:#888;">EC Declaration of Conformity</strong><br>
+      We hereby declare that the device described below complies with the relevant EC directives.<br>
+      <strong>Device:</strong> molitor 4K Light player ·
+      <strong>Description:</strong> Device for playing digital video files from Secure Digital memory cards<br>
+      <strong>EC Directives:</strong> 89/336/EEC (EMC), amended by 91/263/EEC · 92/31/EEC · 93/68/EEC ·
+      <strong>Standards:</strong> EN61000-6-1 (immunity) · EN61000-6-3 (emissions)<br>
+      <strong>Manufacturer:</strong> SZe Schneider &amp; Zirr Engineering GmbH · Ledenweg 43A · D-01445 Radebeul · Germany
+    </div>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>molitor 4K Light Player — User Manual V2.9 · SZe Schneider &amp; Zirr Engineering GmbH · Radebeul, Germany</p>
+  <p>Subject to change without prior notice. Other products or brand names are trademarks of their respective owners.</p>
+</footer>
+
+<script>
+  // ── Accordion: wire up toggle buttons ──
+  document.querySelectorAll('.toc-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const li = btn.closest('li');
+      li.classList.toggle('open');
+    });
+  });
+
+  // clicking parent link toggles its submenu
+  document.querySelectorAll('.toc-row > a').forEach(a => {
+    a.addEventListener('click', () => {
+      a.closest('li').classList.toggle('open');
+    });
+  });
+
+  // ── Active section highlight + auto-open parent on scroll ──
+  const headings = document.querySelectorAll('[id]');
+  const links = document.querySelectorAll('.toc a');
+
+  function updateToc() {
+    let current = '';
+    headings.forEach(el => {
+      if (el.getBoundingClientRect().top <= 80) current = el.id;
+    });
+    links.forEach(a => {
+      const li = a.parentElement.closest('li') || a.parentElement;
+      const isActive = a.getAttribute('href') === '#' + current;
+      // mark active on the immediate li
+      const directLi = a.closest('li');
+      if (directLi) directLi.classList.toggle('active', isActive);
+
+      // auto-open parent accordion when a child is active
+      if (isActive) {
+        let parent = directLi && directLi.parentElement;
+        while (parent && !parent.matches('nav')) {
+          if (parent.matches('ul')) {
+            const parentLi = parent.closest('li');
+            if (parentLi) parentLi.classList.add('open');
+          }
+          parent = parent.parentElement;
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateToc, { passive: true });
+  updateToc();
+</script>
+
+</body>
+</html>
